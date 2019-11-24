@@ -187,6 +187,18 @@ a:not([href]):not([tabindex]):focus {
   outline: 0;
 }
 
+.carousel-item img {
+  min-height: 100vh;
+  position: relative;
+  z-index: -1;
+  background-position: center center;
+  text-align: center;
+}
+
+.carousel {
+  background-color: #dbcc8f
+}
+
 pre,
 code,
 kbd,
@@ -761,12 +773,12 @@ pre code {
   max-width: 41.66667%;
 }
 
-.col-6 {
+/* .col-6 {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 50%;
   flex: 0 0 50%;
   max-width: 50%;
-}
+} */
 
 .col-7 {
   -webkit-box-flex: 0;
@@ -11949,7 +11961,7 @@ h5,
 }
 
 .ftco-navbar-light .nav-item.active>a {
-  color: #ffffff !important;
+  color: white !important;
 }
 
 .ftco-navbar-light.scrolled {
