@@ -6572,6 +6572,10 @@ a.close.disabled {
   display: none;
 }
 
+.hidden {
+  display: none;
+}
+
 .toast-header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -12184,9 +12188,9 @@ h5,
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   border-radius: 50%;
-  -webkit-animation: 1.6s ease infinite wheel-up-down;
-  -moz-animation: 1.6s ease infinite wheel-up-down;
-  animation: 1.6s ease infinite wheel-up-down;
+  -webkit-animation: 1.2s ease infinite wheel-up-down;
+  -moz-animation: 1.2s ease infinite wheel-up-down;
+  animation: 1.2s ease infinite wheel-up-down;
   color: #000000;
   font-size: 20px;
 }
@@ -12958,23 +12962,23 @@ h5,
 }
 
 .product .text .bottom-area a.add-to-cart {
-  background: #000000;
+  background: #dbcc8f;
   color: #fff;
 }
 
 .product .text .bottom-area a.add-to-cart:hover {
-  background: #dbcc8f;
-  color: #fff;
+  background: #fff;
+  color: #dbcc8f;
 }
 
 .product .text .bottom-area a.buy-now {
-  background: #fff;
-  color: #000000;
+  background: #000000;
+  color: #dbcc8f;
 }
 
 .product .text .bottom-area a.buy-now:hover {
   background: #dbcc8f;
-  color: #fff;
+  color: #000000;
 }
 
 @media (max-width: 991.98px) {
@@ -13770,6 +13774,8 @@ textarea.form-control {
   position: relative;
 }
 
+
+
 @media (max-width: 767.98px) {
   .ftco-section {
     padding: 6em 0;
@@ -13937,7 +13943,6 @@ textarea.form-control {
 
 .ftco-footer {
   font-size: 14px;
-  padding: 7em 0;
   color: rgba(255, 255, 255, 0.8);
   background: #4e4e4e;
   background: #000000;
