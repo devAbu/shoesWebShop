@@ -425,7 +425,7 @@
 										<div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
 											aria-labelledby="headingOne">
 											<div class="panel-body">
-												<!-- TODO: mozda bez ovih-->
+												<!-- TODO: mozda bez ovih il vidjet koji nam trebaju-->
 												<ul>
 													<li><a href="#">Sport</a></li>
 													<li><a href="#">Casual</a></li>
@@ -450,7 +450,7 @@
 										<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
 											aria-labelledby="headingTwo">
 											<div class="panel-body">
-												<!-- TODO: mozda bez ovih -->
+												<!-- TODO: mozda bez ovih il vidjet koji nam trebaju-->
 												<ul>
 													<li><a href="#">Sport</a></li>
 													<li><a href="#">Casual</a></li>
@@ -515,33 +515,37 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<!-- TODO: stavit kao range pravi...da se moze povlacit sa obje strane-->
-											<label for="guests">Price from:</label>
+											<label for="guests">From:</label>
 											<div class="form-field">
-												<i class="icon icon-arrow-down3"></i>
-												<!-- TODO: ako ne pravi range ona ovdje pravi input field -->
-												<select name="people" id="people" class="form-control">
+												<!-- <i class="icon icon-arrow-down3"></i> -->
+												<!-- TODO: napravit validaciju...nmz bit manji od PRICE TO -->
+												<input type="number" id="priceFrom" name="priceFrom"
+													class="form-control" min="0" step="10" style="padding-right: 5%">
+												<!-- <select name="people" id="people" class="form-control">
 													<option value="#">1</option>
 													<option value="#">200</option>
 													<option value="#">300</option>
 													<option value="#">400</option>
 													<option value="#">1000</option>
-												</select>
+												</select> -->
 											</div>
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="guests">Price to:</label>
+											<label for="guests">To:</label>
 											<div class="form-field">
-												<i class="icon icon-arrow-down3"></i>
-												<!-- TODO: ako ne pravi range ona ovdje pravi input field -->
-												<select name="people" id="people" class="form-control">
+												<!-- <i class="icon icon-arrow-down3"></i> -->
+												<!-- TODO: napravit validaciju...nmz bit veci od PRICE FROM -->
+												<input type="number" id="priceTo" name="priceTo" class="form-control"
+													min="0" step="10" style="padding-right: 5%">
+												<!-- <select name="people" id="people" class="form-control">
 													<option value="#">2000</option>
 													<option value="#">4000</option>
 													<option value="#">6000</option>
 													<option value="#">8000</option>
 													<option value="#">10000</option>
-												</select>
+												</select> -->
 											</div>
 										</div>
 									</div>
@@ -570,49 +574,49 @@
 				<div class="col-md-4 col-lg-2 ftco-animate">
 					<a href="images/gallery-1.jpg" class="gallery image-popup img d-flex align-items-center"
 						style="background-image: url(images/gallery-1.jpg);">
-						<div class="icon mb-4 d-flex align-items-center justify-content-center">
+						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
-						</div>
+						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
 					<a href="images/gallery-2.jpg" class="gallery image-popup img d-flex align-items-center"
 						style="background-image: url(images/gallery-2.jpg);">
-						<div class="icon mb-4 d-flex align-items-center justify-content-center">
+						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
-						</div>
+						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
 					<a href="images/gallery-3.jpg" class="gallery image-popup img d-flex align-items-center"
 						style="background-image: url(images/gallery-3.jpg);">
-						<div class="icon mb-4 d-flex align-items-center justify-content-center">
+						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
-						</div>
+						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
 					<a href="images/gallery-4.jpg" class="gallery image-popup img d-flex align-items-center"
 						style="background-image: url(images/gallery-4.jpg);">
-						<div class="icon mb-4 d-flex align-items-center justify-content-center">
+						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
-						</div>
+						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
 					<a href="images/gallery-5.jpg" class="gallery image-popup img d-flex align-items-center"
 						style="background-image: url(images/gallery-5.jpg);">
-						<div class="icon mb-4 d-flex align-items-center justify-content-center">
+						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
-						</div>
+						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
 					<a href="images/gallery-6.jpg" class="gallery image-popup img d-flex align-items-center"
 						style="background-image: url(images/gallery-6.jpg);">
-						<div class="icon mb-4 d-flex align-items-center justify-content-center">
+						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
-						</div>
+						</div> -->
 					</a>
 				</div>
 			</div>

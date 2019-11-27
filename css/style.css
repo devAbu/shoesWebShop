@@ -12631,15 +12631,15 @@ h5,
 }
 
 .btn.btn-primary {
-  background: #dbcc8f;
-  border: 1px solid #dbcc8f;
-  color: #fff;
+  background: #000000;
+  border: 1px solid #000000;
+  color: #dbcc8f;
 }
 
 .btn.btn-primary:hover {
   border: 1px solid #dbcc8f;
-  background: transparent;
-  color: #dbcc8f;
+  background: #dbcc8f;
+  color: #000000;
 }
 
 .btn.btn-primary.btn-outline-primary {
@@ -12679,15 +12679,15 @@ h5,
 }
 
 .btn.btn-black {
-  background: #000000;
-  border: 1px solid #000000;
-  color: #fff;
+  background: #dbcc8f;
+  border: 1px solid #dbcc8f;
+  color: #ffffff;
 }
 
 .btn.btn-black:hover {
-  background: #dbcc8f;
-  border: 1px solid #dbcc8f;
-  color: #fff;
+  background: #8d8c8c;
+  border: 1px solid #8d8c8c;
+  color: #dbcc8f;
 }
 
 .btn.btn-black.btn-outline-white {
@@ -12977,6 +12977,17 @@ h5,
 }
 
 .product .text .bottom-area a.buy-now:hover {
+  background: #dbcc8f;
+  color: #000000;
+}
+
+a.buy-now {
+  background: #000000;
+  color: #dbcc8f;
+  padding: 1rem;
+}
+
+a.buy-now:hover {
   background: #dbcc8f;
   color: #000000;
 }
