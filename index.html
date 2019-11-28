@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>ABOC</title>
+	<title>SHOESHION</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="ABOC">
@@ -33,6 +33,9 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
+
+	<!-- TOASTR -->
+	<link href="toastr.css" rel="stylesheet" />
 </head>
 
 <body class="goto-here">
@@ -68,7 +71,7 @@
 			</button>
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav ml-auto">
+				<ul class="navbar-nav">
 					<li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
 					<li class="nav-item"><a href="shop.html" class="nav-link">Shop</a></li>
 					<!-- <li class="nav-item dropdown">
@@ -85,12 +88,126 @@
 			  <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
 					<li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span
 								class="ion-ios-heart"></span>[0]</a></li>
-
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#loginModal"
+							style="cursor: pointer;">Sign
+							in</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#registerModal"
+							style="cursor: pointer;">Sign
+							up</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<!-- END nav -->
+	<!-- /nav -->
+
+	<div class="modal fade " id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Sign in</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- TODO: uradit backend -->
+					<form id="loginForm" name="loginForm">
+						<div class="col-12">
+							<input type="email" placeholder="you@example.com" class="form-control" id="emailLog"
+								name="emailLog" required>
+							<br>
+						</div>
+						<div class="col-12">
+							<div class="pass">
+								<input type="password" placeholder="Password..." class="form-control" name="passLog"
+									id="passLog" required>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-7 col-sm-7 col-md-7 col-lg-7">
+								<a class="badge ml-3 text-primary" style="text-decoration:none; cursor: pointer;"
+									data-toggle="modal" data-target="#registerModal" data-dismiss="modal">
+									<span style="font-size:13px;">No account?</span>
+								</a>
+							</div>
+							<!-- TODO: uradit forgot password -->
+							<!-- <div class="col-5 col-sm-5 col-md-5 col-lg-5">
+								<a href="forgotPass.php" class="badge ml-sm-4  text-primary">
+									<span style="font-size:13px;">Forgot password?</span>
+								</a>
+							</div> -->
+							<br />
+						</div>
+						<div class="col-xs-12  offset-5 mt-3">
+							<button type="button" id="logButton" name="logButton" class="btn btn-primary">Login
+							</button>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close <span
+							aria-hidden="true">&times;</span></button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Create a free account</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- TODO: treba uradit backend -->
+					<form id="regForm" name="regForm">
+						<div class="col-xs-12">
+							<input type="text" placeholder="Full name..." id="fullSign" name="fullSign"
+								class="form-control" required>
+							<br>
+						</div>
+						<div class="col-xs-12">
+							<input type="email" placeholder="you@example.com" id="emailSign" name="emailSign"
+								class="form-control" required>
+							<br />
+						</div>
+						<div class="col-xs-12">
+							<div class="pass">
+								<input type="password" placeholder="Password..." class="form-control" name="passSign"
+									id="passSign" required>
+								<i class="far fa-eye passIcon" id="passIcon"></i>
+							</div>
+						</div>
+						<div class="col-12 mb-3" style="margin-left:-10px !important;">
+							<!-- TODO: na hover treba druga boja -->
+							<a class="text-primary" data-toggle="modal" data-target="#loginModal"
+								style="cursor: pointer;" data-dismiss="modal">Already has
+								account?</a>
+						</div>
+						<div class="col-xs-12  offset-4">
+							<button type="button" class="btn btn-lg btn-primary" id="signButton" name="signButton">Sign
+								up for
+								free
+							</button>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close <span
+							aria-hidden="true">&times;</span></button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<section id="home-section" class="hero">
@@ -873,12 +990,82 @@
 	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false">
 	</script>
 	<script src="js/google-map.js"></script> -->
+	<!-- TOASTR -->
+	<script src="toastr.js"></script>
 	<script src="js/main.js"></script>
 
 
 	<script>
 		var year = new Date().getFullYear()
 		$('#currentYear').html(year)
+	</script>
+
+	<!-- TODO: include file -->
+	<script>
+		$(document).ready(function () {
+
+			$('#loginForm input').on('blur change keyup', function (e) {
+				if (e.keyCode == 13) {
+					$('#logButton').trigger('click');
+				}
+			});
+
+			$('#regForm input').on('blur change keyup', function (e) {
+				if (e.keyCode == 13) {
+					$('#signButton').trigger('click');
+				}
+			});
+
+			toastr.options.closeButton = true;
+			toastr.options.preventDuplicates = true;
+
+			$('#logButton').click(function () {
+				var emailLog = $('#emailLog').val();
+				var passLog = $('#passLog').val();
+
+				function validateEmail($emailLog) {
+					var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+					return emailReg.test($emailLog);
+				}
+
+				if (emailLog == "") {
+					toastr.error("Please enter your email address.")
+				} else if (!validateEmail(emailLog)) {
+					toastr.warning("Please enter a valid email address.")
+				} else if (passLog == "") {
+					toastr.error("Please enter your password.")
+				} else {
+					toastr.success(
+						"IDE AJAX"
+					)
+				}
+			})
+
+			$('#signButton').click(function () {
+				var fullNameSign = $('#fullSign').val();
+				var emailSign = $('#emailSign').val();
+				var passSign = $('#passSign').val();
+
+				function validateEmail($emailSign) {
+					var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+					return emailReg.test($emailSign);
+				}
+
+				if (fullNameSign == "") {
+					toastr.error("Please enter your name.")
+				} else if (emailSign == "") {
+					toastr.error("Please enter your email address.")
+				} else if (!validateEmail(emailSign)) {
+					toastr.warning("Please enter a valid email address.")
+				} else if (passSign == "") {
+					toastr.error("Please create a password.")
+				} else {
+					toastr.success(
+						"AJAX OVDJE"
+					)
+				}
+			})
+		})
 	</script>
 </body>
 
