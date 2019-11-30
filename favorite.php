@@ -1,4 +1,3 @@
-<!-- TODO: mozda da se u navbaru sakrije ako nije user logovan -->
 <?php
 session_start();
 ?>
@@ -35,6 +34,9 @@ session_start();
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
+
+	<!-- TOASTR -->
+	<link href="toastr.css" rel="stylesheet" />
 </head>
 
 <body class="goto-here">
@@ -235,9 +237,49 @@ session_start();
 								</tr>
 							</thead>
 							<tbody>
-								<!-- TODO: napravit da se povlaci iz baze...po useru -->
-								<tr class="text-center">
-									<!-- TODO: napravit da se stvarno moze obrisat -->
+
+								<?php
+								if (isset($_SESSION['email'])) {
+									require 'connection/connect.php';
+
+									$session = $_SESSION['email'];
+
+									$sql = "SELECT favoriteproduct.ID as favoriteID,favoriteproduct.productID, favoriteproduct.user, products.ID, products.image, products.amazonLink, products.title, products.price FROM favoriteproduct INNER JOIN products ON favoriteproduct.productID=products.ID where favoriteproduct.user = '$session' ";
+
+									$result = $dbc->query($sql);
+
+									$count = $result->num_rows;
+
+									if ($count > 0) {
+										while ($row = $result->fetch_assoc()) {
+											echo '<tr class="text-center">
+									
+									<td class="product-remove"><a href="javascript:void(0)" id="deleteFavorite' . $row["favoriteID"] . '" onclick="deleteFavorite(this.id)"><span class="ion-ios-close"></span></a></td>
+									<input type="number" value="' . $row["ID"] . '" hidden>
+
+									<td class="image-prod">
+										<div class="img" style="background-image:url( data:image/jpeg;base64,' . base64_encode($row["image"]) . ');"></div>
+									</td>
+
+									<td class="product-name">
+										<h3>' . $row['title'] . '</h3>
+									</td>
+
+									<td class="price">$' . $row['price'] . '</td>
+
+									<td><a target="_blank" href="' . $row['amazonLink'] . '" class="buy-now text-center py-2"><span class="mx-2">Buy now<i class="ion-ios-cart ml-1"></i></span></a></td>
+
+								</tr>';
+										}
+									} else {
+										echo " 0 results";
+									}
+									$dbc->close();
+								}
+								?>
+
+								<!-- <tr class="text-center">
+									<-- TODO: napravit da se stvarno moze obrisat ->
 									<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
 
 									<td class="image-prod">
@@ -253,15 +295,15 @@ session_start();
 
 									<td><a target="_blank" href="https://www.amazon.com/gp/offer-listing/B07198WDN5/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07198WDN5&linkCode=am2&tag=shoeshion1-20&linkId=5f01c89633427bff495dbc74cb539344" class="buy-now text-center py-2"><span class="mx-2">Buy now<i class="ion-ios-cart ml-1"></i></span></a></td>
 
-									<!-- <td class="quantity">
+									<!- <td class="quantity">
 										<div class="input-group mb-3">
 											<input type="text" name="quantity"
 												class="quantity form-control input-number" value="1" min="1" max="100">
 										</div>
 									</td>
 
-									<td class="total">$4.90</td> -->
-								</tr><!-- END TR-->
+									<td class="total">$4.90</td> ->
+								</tr>!-- END TR-> -->
 							</tbody>
 						</table>
 					</div>
@@ -402,6 +444,8 @@ session_start();
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false">
 	</script>
 	<script src="js/google-map.js"></script>
+	<!-- TOASTR -->
+	<script src="toastr.js"></script>
 	<script src="js/main.js"></script>
 
 	<script>
@@ -556,6 +600,25 @@ session_start();
 				}
 			})
 		})
+
+
+		function deleteFavorite(id) {
+			var idRes = id.replace(/\D/g, "")
+			$.ajax({
+				url: "dbSend/deleteFavorite.php?task=delete&favoriteID=" + idRes,
+				success: function(data) {
+					if (data.indexOf('deleted') > -1) {
+						toastr.success('Item removed successfully')
+						location.reload();
+					} else {
+						toastr.error('There is a problem with the server. Please try again later')
+					}
+				},
+				error: function(data, err) {
+					toastr.error('Some problem occured. Please try later.')
+				}
+			})
+		}
 	</script>
 
 </body>

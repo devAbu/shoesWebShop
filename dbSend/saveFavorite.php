@@ -1,5 +1,5 @@
 <?php
-
+/* TODO: ne moze user isti artikal 2 put save-at */
 require '../connection/connect.php';
 
 $productID = $_REQUEST['productID'];

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'connection/connect.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,13 +89,37 @@ session_start();
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 			  <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
 					<!-- TODO: da se broj izmedju [] promijeni na osnovu broja artikala u favorite -->
-					<li class="nav-item cta cta-colored"><a href="favorite.php" class="nav-link"><span class="ion-ios-heart"></span>[0]</a></li>
+					<li class="nav-item cta cta-colored"><a href="favorite.php" class="nav-link" id="favoriteNumber"><span class="ion-ios-heart"></span>
+							<?php
+
+							if (isset($_SESSION['email'])) {
+								$session = $_SESSION['email'];
+
+								/* require 'connection/connect.php'; */
+
+								$sql = "SELECT * FROM  favoriteproduct where user = '$session' ";
+
+								$result = $dbc->query($sql);
+
+								$count = $result->num_rows;
+
+								if ($count > 0) {
+									echo '[' . $count . ']';
+								} else {
+									echo '[0]';
+								}
+							} else {
+								echo '[0]';
+							}
+
+							?>
+						</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
 					<?php
 					if (isset($_SESSION['email'])) {
 						$session = $_SESSION['email'];
-						echo "<li class='nav-item'><a href='logout.php'  class='nav-link link'><span class='navLinks'><i class='fas fa-sign-in-alt mr-2'></i>Logout</span></a></li><input type='text'  value='$session' hidden id='session' name='session'>";
+						echo "<li class='nav-item'><a href='logout.php'  class='nav-link link'><span class='navLinks'><i class='fas fa-sign-in-alt mr-2'></i>Logout</span></a></li><input type='text'  value='$session' hidden id='session' name='session'  onload='sessionCheck(id)'>";
 					} else {
 						echo '<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;">Sign
 							in</a></li>
@@ -315,13 +340,12 @@ session_start();
 			<div class="row">
 				<?php
 
-				require 'connection/connect.php';
+				/* require 'connection/connect.php'; */
 
 				$sql = "SELECT * FROM products";
 				$result = $dbc->query($sql);
 
 				$count = $result->num_rows;
-
 				if ($count > 0) {
 					while ($row = $result->fetch_assoc()) {
 						if ($row['special'] == 1) {
@@ -351,7 +375,7 @@ session_start();
 								<input type="number" value="' . $row['ID'] . '" hidden id="product">
 							</div>
 							<p class="bottom-area d-flex px-3">
-								<a href="javascript:void(0)" class="add-to-cart text-center py-2 mr-1 " id="savesaveFavorite' . $row["ID"] . '" onclick="saveFavorite(this.id)"><span>SAVE<i class="ion-ios-heart ml-1"></i></span></a>
+								<a href="javascript:void(0)" class="add-to-cart text-center py-2 mr-1 " id="saveFavorite' . $row["ID"] . '" onclick="saveFavorite(this.id)"><span>SAVE<i class="ion-ios-heart ml-1"></i></span></a>
 								<a class="buy-now text-center py-2" target="_blank" href="' . $row['amazonLink'] . '"><span>Buy now<i class="ion-ios-cart ml-1"></i></span></a>
 							</p>
 						</div>
@@ -789,9 +813,13 @@ session_start();
 			})
 		})
 
+
+
 		if (typeof $('#session').val() == "undefined") {
-			$('#save').css('pointer-events', 'none')
-			$('#save').css('opacity', 0.5)
+			$('[id^="save"]').css('pointer-events', 'none')
+			$('[id^="save"]').css('opacity', 0.5)
+
+			$('#favoriteNumber').css('pointer-events', 'none')
 		}
 
 		function saveFavorite(id) {
