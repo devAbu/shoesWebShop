@@ -12989,7 +12989,7 @@ h5,
 a.buy-now {
   background: #000000;
   color: #dbcc8f;
-  padding: 1rem;
+  /*padding: 1rem;*/
 }
 
 a.buy-now:hover {

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,16 +67,15 @@
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
 
-			<a class="navbar-brand" href="index.html">IME </a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+			<a class="navbar-brand" href="index.php">IME </a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
 			</button>
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-					<li class="nav-item active"><a href="shop.html" class="nav-link">Shop</a></li>
+					<li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
+					<li class="nav-item active"><a href="shop.php" class="nav-link">Shop</a></li>
 					<!-- <li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown04">
@@ -86,24 +88,31 @@
 					<!-- <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 			  <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
-					<li class="nav-item cta cta-colored"><a href="favorite.html" class="nav-link"><span
-								class="ion-ios-heart"></span>[0]</a></li>
+					<li class="nav-item cta cta-colored"><a href="favorite.php" class="nav-link"><span class="ion-ios-heart"></span>[0]</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#loginModal"
-							style="cursor: pointer;">Sign
+					<?php
+					if (isset($_SESSION['email'])) {
+						$session = $_SESSION['email'];
+						echo "<li class='nav-item'><a href='logout.php'  class='nav-link link'><span class='navLinks'><i class='fas fa-sign-in-alt mr-2'></i>Logout</span></a></li><input type='text'  value='$session' hidden id='session' name='session'>";
+					} else {
+						echo '<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;">Sign
 							in</a></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#registerModal"
-							style="cursor: pointer;">Sign
-							up</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#registerModal" style="cursor: pointer;">Sign
+							up</a></li>';
+					}
+					?>
+					<!-- <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;">Sign
+							in</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#registerModal" style="cursor: pointer;">Sign
+							up</a></li> -->
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<!-- END nav -->
 
-	<div class="modal fade " id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade " id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -113,23 +122,21 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<!-- TODO: uradit backend -->
+
 					<form id="loginForm" name="loginForm">
 						<div class="col-12">
-							<input type="email" placeholder="you@example.com" class="form-control" id="emailLog"
-								name="emailLog" required>
+							<input type="email" placeholder="you@example.com" class="form-control" id="emailLog" name="emailLog" required>
 							<br>
 						</div>
 						<div class="col-12">
 							<div class="pass">
-								<input type="password" placeholder="Password..." class="form-control" name="passLog"
-									id="passLog" required>
+								<input type="password" placeholder="Password..." class="form-control" name="passLog" id="passLog" required>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-7 col-sm-7 col-md-7 col-lg-7">
-								<a class="badge ml-3 text-primary" style="text-decoration:none; cursor: pointer;"
-									data-toggle="modal" data-target="#registerModal" data-dismiss="modal">
+								<a class="badge ml-3 text-primary" style="text-decoration:none; cursor: pointer;" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">
+									<!-- TODO: na hover druga boja -->
 									<span style="font-size:13px;">No account?</span>
 								</a>
 							</div>
@@ -148,8 +155,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close <span
-							aria-hidden="true">&times;</span></button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close <span aria-hidden="true">&times;</span></button>
 				</div>
 			</div>
 		</div>
@@ -157,8 +163,7 @@
 
 
 
-	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -168,29 +173,24 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<!-- TODO: treba uradit backend -->
 					<form id="regForm" name="regForm">
 						<div class="col-xs-12">
-							<input type="text" placeholder="Full name..." id="fullSign" name="fullSign"
-								class="form-control" required>
+							<input type="text" placeholder="Full name..." id="fullSign" name="fullSign" class="form-control" required>
 							<br>
 						</div>
 						<div class="col-xs-12">
-							<input type="email" placeholder="you@example.com" id="emailSign" name="emailSign"
-								class="form-control" required>
+							<input type="email" placeholder="you@example.com" id="emailSign" name="emailSign" class="form-control" required>
 							<br />
 						</div>
 						<div class="col-xs-12">
 							<div class="pass">
-								<input type="password" placeholder="Password..." class="form-control" name="passSign"
-									id="passSign" required>
+								<input type="password" placeholder="Password..." class="form-control" name="passSign" id="passSign" required>
 								<i class="far fa-eye passIcon" id="passIcon"></i>
 							</div>
 						</div>
 						<div class="col-12 mb-3" style="margin-left:-10px !important;">
 							<!-- TODO: na hover treba druga boja -->
-							<a class="text-primary" data-toggle="modal" data-target="#loginModal"
-								style="cursor: pointer;" data-dismiss="modal">Already has
+							<a class="text-primary" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;" data-dismiss="modal">Already has
 								account?</a>
 						</div>
 						<div class="col-xs-12  offset-4">
@@ -202,8 +202,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close <span
-							aria-hidden="true">&times;</span></button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close <span aria-hidden="true">&times;</span></button>
 				</div>
 			</div>
 		</div>
@@ -214,7 +213,7 @@
 		<div class="container">
 			<div class="row no-gutters slider-text align-items-center justify-content-center">
 				<div class="col-md-9 ftco-animate text-center">
-					<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Shop</span></p>
+					<p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home</a></span> <span>Shop</span></p>
 					<h1 class="mb-0 bread">Shop</h1>
 				</div>
 			</div>
@@ -226,289 +225,59 @@
 			<div class="row">
 				<div class="col-md-8 col-lg-10 order-md-last">
 					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
-							<!-- TODO: isto ko tamo -->
-							<div class="product d-flex flex-column">
-								<a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.png"
-										alt="Colorlib Template">
-									<div class="overlay"></div>
-								</a>
-								<div class="text py-3 pb-4 px-3">
-									<div class="d-flex">
-										<div class="cat">
-											<span>Lifestyle</span>
-										</div>
-										<div class="rating">
-											<p class="text-right mb-0">
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-											</p>
-										</div>
-									</div>
-									<h3><a href="#">Nike Free RN 2019 iD</a></h3>
-									<div class="pricing">
-										<p class="price"><span>$120.00</span></p>
-									</div>
-									<p class="bottom-area d-flex px-3">
-										<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-													class="ion-ios-add ml-1"></i></span></a>
-										<a target="_blank"
-											href="https://www.amazon.com/gp/offer-listing/B07198WDN5/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07198WDN5&linkCode=am2&tag=shoeshion1-20&linkId=5f01c89633427bff495dbc74cb539344"
-											class="buy-now text-center py-2">Buy now<span><i
-													class="ion-ios-cart ml-1"></i></span></a>
-									</p>
-								</div>
-							</div>
-						</div>
-						<!-- <div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
-							<div class="product d-flex flex-column">
-								<a href="#" class="img-prod"><img class="img-fluid" src="images/product-2.png"
-										alt="Colorlib Template">
-									<span class="status">50% Off</span>
-									<div class="overlay"></div>
-								</a>
-								<div class="text py-3 pb-4 px-3">
-									<div class="d-flex">
-										<div class="cat">
-											<span>Lifestyle</span>
-										</div>
-										<div class="rating">
-											<p class="text-right mb-0">
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-											</p>
-										</div>
-									</div>
-									<h3><a href="#">Nike Free RN 2019 iD</a></h3>
-									<div class="pricing">
-										<p class="price"><span class="mr-2 price-dc">$120.00</span><span
-												class="price-sale">$80.00</span></p>
-									</div>
-									<p class="bottom-area d-flex px-3">
-										<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-													class="ion-ios-add ml-1"></i></span></a>
-										<a href="#" class="buy-now text-center py-2">Buy now<span><i
-													class="ion-ios-cart ml-1"></i></span></a>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
-							<div class="product">
-								<a href="#" class="img-prod"><img class="img-fluid" src="images/product-3.png"
-										alt="Colorlib Template">
-									<div class="overlay"></div>
-								</a>
-								<div class="text py-3 pb-4 px-3">
-									<div class="d-flex">
-										<div class="cat">
-											<span>Lifestyle</span>
-										</div>
-										<div class="rating">
-											<p class="text-right mb-0">
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-											</p>
-										</div>
-									</div>
-									<h3><a href="#">Nike Free RN 2019 iD</a></h3>
-									<div class="pricing">
-										<p class="price"><span>$120.00</span></p>
-									</div>
-									<p class="bottom-area d-flex px-3">
-										<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-													class="ion-ios-add ml-1"></i></span></a>
-										<a href="#" class="buy-now text-center py-2">Buy now<span><i
-													class="ion-ios-cart ml-1"></i></span></a>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
-							<div class="product">
-								<a href="#" class="img-prod"><img class="img-fluid" src="images/product-4.png"
-										alt="Colorlib Template">
-									<div class="overlay"></div>
-								</a>
-								<div class="text py-3 pb-4 px-3">
-									<div class="d-flex">
-										<div class="cat">
-											<span>Lifestyle</span>
-										</div>
-										<div class="rating">
-											<p class="text-right mb-0">
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-											</p>
-										</div>
-									</div>
-									<h3><a href="#">Nike Free RN 2019 iD</a></h3>
-									<div class="pricing">
-										<p class="price"><span>$120.00</span></p>
-									</div>
-									<p class="bottom-area d-flex px-3">
-										<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-													class="ion-ios-add ml-1"></i></span></a>
-										<a href="#" class="buy-now text-center py-2">Buy now<span><i
-													class="ion-ios-cart ml-1"></i></span></a>
-									</p>
-								</div>
-							</div>
-						</div>
+						<?php
 
-						<div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
-							<div class="product d-flex flex-column">
-								<a href="#" class="img-prod"><img class="img-fluid" src="images/product-5.png"
-										alt="Colorlib Template">
-									<div class="overlay"></div>
-								</a>
-								<div class="text py-3 pb-4 px-3">
-									<div class="d-flex">
-										<div class="cat">
-											<span>Lifestyle</span>
-										</div>
-										<div class="rating">
-											<p class="text-right mb-0">
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-											</p>
-										</div>
-									</div>
-									<h3><a href="#">Nike Free RN 2019 iD</a></h3>
-									<div class="pricing">
-										<p class="price"><span>$120.00</span></p>
-									</div>
-									<p class="bottom-area d-flex px-3">
-										<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-													class="ion-ios-add ml-1"></i></span></a>
-										<a href="#" class="buy-now text-center py-2">Buy now<span><i
-													class="ion-ios-cart ml-1"></i></span></a>
+						require 'connection/connect.php';
+
+						$sql = "SELECT * FROM products";
+						$result = $dbc->query($sql);
+
+						$count = $result->num_rows;
+
+						if ($count > 0) {
+							while ($row = $result->fetch_assoc()) {
+
+								echo '<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+					<div class="product d-flex flex-column">
+						<a href="#" class="img-prod"><img class="img-fluid" src=" data:image/jpeg;base64,' . base64_encode($row["image"]) . '" alt="' . $row['title'] . '">
+							<div class="overlay"></div>
+						</a>
+						<div class="text py-3 pb-4 px-3">
+							<div class="d-flex">
+								<div class="cat">
+									<span>' . $row['type'] . '</span>
+								</div>
+								<div class="rating">
+									<p class="text-right mb-0">
+										<a href="#"><span class="ion-ios-star-outline"></span></a>
+										<a href="#"><span class="ion-ios-star-outline"></span></a>
+										<a href="#"><span class="ion-ios-star-outline"></span></a>
+										<a href="#"><span class="ion-ios-star-outline"></span></a>
+										<a href="#"><span class="ion-ios-star-outline"></span></a>
 									</p>
 								</div>
 							</div>
+							<h3><a href="#">' . $row['title'] . '</a></h3>
+							<div class="pricing">
+								<p class="price"><span>$' . $row['price'] . '</span></p>
+							</div>
+							<p class="bottom-area d-flex px-3">
+								<a href="#" class="add-to-cart text-center py-2 mr-1"><span>SAVE<i class="ion-ios-heart ml-1"></i></span></a>
+								<a target="_blank" class="buy-now text-center py-2" href="' . $row['amazonLink'] . '"><span>Buy now<i class="ion-ios-cart ml-1"></i></span></a>
+							</p>
 						</div>
-						<div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
-							<div class="product d-flex flex-column">
-								<a href="#" class="img-prod"><img class="img-fluid" src="images/product-6.png"
-										alt="Colorlib Template">
-									<span class="status">50% Off</span>
-									<div class="overlay"></div>
-								</a>
-								<div class="text py-3 pb-4 px-3">
-									<div class="d-flex">
-										<div class="cat">
-											<span>Lifestyle</span>
-										</div>
-										<div class="rating">
-											<p class="text-right mb-0">
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-											</p>
-										</div>
-									</div>
-									<h3><a href="#">Nike Free RN 2019 iD</a></h3>
-									<div class="pricing">
-										<p class="price"><span class="mr-2 price-dc">$120.00</span><span
-												class="price-sale">$80.00</span></p>
-									</div>
-									<p class="bottom-area d-flex px-3">
-										<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-													class="ion-ios-add ml-1"></i></span></a>
-										<a href="#" class="buy-now text-center py-2">Buy now<span><i
-													class="ion-ios-cart ml-1"></i></span></a>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
-							<div class="product">
-								<a href="#" class="img-prod"><img class="img-fluid" src="images/product-7.png"
-										alt="Colorlib Template">
-									<div class="overlay"></div>
-								</a>
-								<div class="text py-3 pb-4 px-3">
-									<div class="d-flex">
-										<div class="cat">
-											<span>Lifestyle</span>
-										</div>
-										<div class="rating">
-											<p class="text-right mb-0">
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-											</p>
-										</div>
-									</div>
-									<h3><a href="#">Nike Free RN 2019 iD</a></h3>
-									<div class="pricing">
-										<p class="price"><span>$120.00</span></p>
-									</div>
-									<p class="bottom-area d-flex px-3">
-										<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-													class="ion-ios-add ml-1"></i></span></a>
-										<a href="#" class="buy-now text-center py-2">Buy now<span><i
-													class="ion-ios-cart ml-1"></i></span></a>
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
-							<div class="product">
-								<a href="#" class="img-prod"><img class="img-fluid" src="images/product-8.png"
-										alt="Colorlib Template">
-									<div class="overlay"></div>
-								</a>
-								<div class="text py-3 pb-4 px-3">
-									<div class="d-flex">
-										<div class="cat">
-											<span>Lifestyle</span>
-										</div>
-										<div class="rating">
-											<p class="text-right mb-0">
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-												<a href="#"><span class="ion-ios-star-outline"></span></a>
-											</p>
-										</div>
-									</div>
-									<h3><a href="#">Nike Free RN 2019 iD</a></h3>
-									<div class="pricing">
-										<p class="price"><span>$120.00</span></p>
-									</div>
-									<p class="bottom-area d-flex px-3">
-										<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-													class="ion-ios-add ml-1"></i></span></a>
-										<a href="#" class="buy-now text-center py-2">Buy now<span><i
-													class="ion-ios-cart ml-1"></i></span></a>
-									</p>
-								</div>
-							</div>
-						</div> -->
+					</div>
+				</div>';
+							}
+						} else {
+							echo " 0 results";
+						}
+						$dbc->close();
+						?>
+
 					</div>
 					<!-- TODO: napravit pravi pagination i izmijenit ovaj dizajn -->
-					<div class="row mt-5">
+					<!-- <div class="row mt-5">
 						<div class="col text-center">
 							<div class="block-27">
 								<ul>
@@ -522,7 +291,7 @@
 								</ul>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 
 				<div class="col-md-4 col-lg-2">
@@ -534,13 +303,11 @@
 									<div class="panel panel-default">
 										<div class="panel-heading" role="tab" id="headingOne">
 											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-													aria-expanded="true" aria-controls="collapseOne">Men's Shoes
+												<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Men's Shoes
 												</a>
 											</h4>
 										</div>
-										<div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
-											aria-labelledby="headingOne">
+										<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 											<div class="panel-body">
 												<!-- TODO: mozda bez ovih il vidjet koji nam trebaju-->
 												<ul>
@@ -558,14 +325,11 @@
 									<div class="panel panel-default">
 										<div class="panel-heading" role="tab" id="headingTwo">
 											<h4 class="panel-title">
-												<a class="collapsed" data-toggle="collapse" data-parent="#accordion"
-													href="#collapseTwo" aria-expanded="false"
-													aria-controls="collapseTwo">Women's Shoes
+												<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Women's Shoes
 												</a>
 											</h4>
 										</div>
-										<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-											aria-labelledby="headingTwo">
+										<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 											<div class="panel-body">
 												<!-- TODO: mozda bez ovih il vidjet koji nam trebaju-->
 												<ul>
@@ -635,8 +399,7 @@
 											<label for="guests">From:</label>
 											<div class="form-field">
 												<!-- <i class="icon icon-arrow-down3"></i> -->
-												<input type="number" id="priceFrom" name="priceFrom"
-													class="form-control" min="0" step="10" style="padding-right: 5%">
+												<input type="number" id="priceFrom" name="priceFrom" class="form-control" min="0" step="10" style="padding-right: 5%" placeholder="0">
 											</div>
 										</div>
 									</div>
@@ -645,9 +408,9 @@
 											<label for="guests">To:</label>
 											<div class="form-field">
 												<!-- <i class="icon icon-arrow-down3"></i> -->
-												<input type="number" id="priceTo" name="priceTo" class="form-control"
-													min="0" step="10" style="padding-right: 5%">
+												<input type="number" id="priceTo" name="priceTo" class="form-control" min="0" step="10" style="padding-right: 5%" placeholder="100">
 											</div>
+											<!-- TODO: dodat button za search -->
 										</div>
 									</div>
 								</div>
@@ -673,48 +436,42 @@
 		<div class="container-fluid px-0">
 			<div class="row no-gutters">
 				<div class="col-md-4 col-lg-2 ftco-animate">
-					<a href="images/gallery-1.jpg" class="gallery image-popup img d-flex align-items-center"
-						style="background-image: url(images/gallery-1.jpg);">
+					<a href="images/gallery-1.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(images/gallery-1.jpg);">
 						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
 						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
-					<a href="images/gallery-2.jpg" class="gallery image-popup img d-flex align-items-center"
-						style="background-image: url(images/gallery-2.jpg);">
+					<a href="images/gallery-2.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(images/gallery-2.jpg);">
 						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
 						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
-					<a href="images/gallery-3.jpg" class="gallery image-popup img d-flex align-items-center"
-						style="background-image: url(images/gallery-3.jpg);">
+					<a href="images/gallery-3.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(images/gallery-3.jpg);">
 						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
 						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
-					<a href="images/gallery-4.jpg" class="gallery image-popup img d-flex align-items-center"
-						style="background-image: url(images/gallery-4.jpg);">
+					<a href="images/gallery-4.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(images/gallery-4.jpg);">
 						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
 						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
-					<a href="images/gallery-5.jpg" class="gallery image-popup img d-flex align-items-center"
-						style="background-image: url(images/gallery-5.jpg);">
+					<a href="images/gallery-5.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(images/gallery-5.jpg);">
 						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
 						</div> -->
 					</a>
 				</div>
 				<div class="col-md-4 col-lg-2 ftco-animate">
-					<a href="images/gallery-6.jpg" class="gallery image-popup img d-flex align-items-center"
-						style="background-image: url(images/gallery-6.jpg);">
+					<a href="images/gallery-6.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(images/gallery-6.jpg);">
 						<!-- <div class="icon mb-4 d-flex align-items-center justify-content-center">
 							<span class="icon-instagram"></span>
 						</div> -->
@@ -795,8 +552,7 @@
 		<div class="row" style="margin: 0 !important; padding: 0 !important;">
 			<div class="col-md-12 text-center">
 				<p>
-					&copy; <span id="currentYear"></span> All rights reserved | Created by <a
-						href="https://abocdev.com/">Aboc</a>
+					&copy; <span id="currentYear"></span> All rights reserved | Created by <a href="https://abocdev.com/">Aboc</a>
 				</p>
 			</div>
 		</div>
@@ -808,8 +564,7 @@
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
 			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-				stroke="#F96D00" /></svg></div>
+			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
 
 
 	<script src="js/jquery.min.js"></script>
@@ -841,7 +596,7 @@
 		toastr.options.closeButton = true;
 
 
-		$('#priceFrom, #priceTo').on('keydown', function (e) {
+		$('#priceFrom, #priceTo').on('keydown', function(e) {
 			console.log()
 			if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode <
 					58) || e.keyCode == 8 || e.keyCode == 9)) {
@@ -849,7 +604,7 @@
 			}
 		})
 
-		$('#priceFrom, #priceTo').on('change', function () {
+		$('#priceFrom, #priceTo').on('change', function() {
 
 			var priceFrom = $('#priceFrom').val()
 			var priceTo = $('#priceTo').val()
@@ -869,6 +624,118 @@
 					toastr.error('Please enter a valid price range')
 				}
 			}
+		})
+	</script>
+
+	<!-- TODO: include file -->
+	<script>
+		$(document).ready(function() {
+
+			$('#loginForm input').on('blur change keyup', function(e) {
+				if (e.keyCode == 13) {
+					$('#logButton').trigger('click');
+				}
+			});
+
+			$('#regForm input').on('blur change keyup', function(e) {
+				if (e.keyCode == 13) {
+					$('#signButton').trigger('click');
+				}
+			});
+
+			toastr.options.closeButton = true;
+			toastr.options.preventDuplicates = true;
+
+			$('#logButton').click(function() {
+				var emailLog = $('#emailLog').val();
+				var passLog = $('#passLog').val();
+
+				function validateEmail($emailLog) {
+					var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+					return emailReg.test($emailLog);
+				}
+
+				if (emailLog == "") {
+					toastr.error("Please enter your email address.")
+				} else if (!validateEmail(emailLog)) {
+					toastr.warning("Please enter a valid email address.")
+				} else if (passLog == "") {
+					toastr.error("Please enter your password.")
+				} else {
+					$.ajax({
+						url: "dbSend/login.php?task=login&emailLog=" + emailLog + "&passLog=" + passLog,
+						success: function(data) {
+							if (data.indexOf('sent') > -1) {
+								toastr.success('Logged in successfully.')
+
+								$('#emailLog').val("");
+								$('#passLog').val("");
+
+								var delay = 1500;
+								setTimeout(function() {
+									console.log(window.location.replace(window.location.href));
+								}, delay);
+
+							} else if (data.indexOf('activated') > -1) {
+								toastr.error('Please activate your email address.')
+							} else if (data.indexOf('pass') > -1) {
+								toastr.error('Password is incorrect.')
+							} else {
+								toastr.error('Email is incorrect.')
+							}
+						},
+						error: function(data, err) {
+							toastr.error('Some problem occurred. Please try later.')
+						}
+					});
+				}
+			})
+
+			$('#signButton').click(function() {
+				var fullNameSign = $('#fullSign').val();
+				var emailSign = $('#emailSign').val();
+				var passSign = $('#passSign').val();
+
+				function validateEmail($emailSign) {
+					var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+					return emailReg.test($emailSign);
+				}
+
+				if (fullNameSign == "") {
+					toastr.error("Please enter your name.")
+				} else if (emailSign == "") {
+					toastr.error("Please enter your email address.")
+				} else if (!validateEmail(emailSign)) {
+					toastr.warning("Please enter a valid email address.")
+				} else if (passSign == "") {
+					toastr.error("Please create a password.")
+				} else {
+					$.ajax({
+						url: "dbSend/register.php?task=register&fullSign=" + fullNameSign + "&emailSign=" + emailSign + "&passSign=" + passSign,
+						success: function(data) {
+							if (data.indexOf('sent') > -1) {
+								toastr.success('Your account created successfully. Please verify your email.')
+
+								$('#fullSign').val("");
+								$('#emailSign').val("");
+								$('#passSign').val("");
+
+								var delay = 1500;
+								setTimeout(function() {
+									console.log(window.location.replace(window.location.href));
+								}, delay);
+
+								/* window.location = "https://bttbh.ba/phpSendEmail.php?emailSign=" + emailSign + "&firstSign=" + firstSign + "&lastSign=" + lastSign; */
+							} else {
+								toastr.error('The email is already exists.')
+							}
+						},
+						error: function(data, err) {
+							toastr.error('Some problem occured. Please try later.')
+						}
+					})
+				}
+			})
 		})
 	</script>
 

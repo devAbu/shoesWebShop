@@ -267,7 +267,6 @@
 
 
  	// magnific popup
- 	/* TODO: mozda obrisat i stavit nas popup....KORISTI SE ZA POPUP KAD SE KLIKNE NA SLIKU */
  	$('.image-popup').magnificPopup({
  		type: 'image',
  		closeOnContentClick: true,
