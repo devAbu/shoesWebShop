@@ -88,7 +88,6 @@ require 'connection/connect.php';
 					<!-- <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 			  <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
-					<!-- TODO: da se broj izmedju [] promijeni na osnovu broja artikala u favorite -->
 					<li class="nav-item cta cta-colored"><a href="favorite.php" class="nav-link" id="favoriteNumber"><span class="ion-ios-heart"></span>
 							<?php
 
@@ -282,7 +281,6 @@ require 'connection/connect.php';
 		</div>
 	</section>
 
-	<!-- TODO: ovaj dio nam mozda ne treba -->
 	<section class="ftco-section ftco-no-pt ftco-no-pb">
 		<div class="container">
 			<div class="row no-gutters ftco-services">
@@ -351,7 +349,7 @@ require 'connection/connect.php';
 						if ($row['special'] == 1) {
 							echo '<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
 					<div class="product d-flex flex-column">
-						<a href="#" class="img-prod"><img class="img-fluid" src=" data:image/jpeg;base64,' . base64_encode($row["image"]) . '" alt="' . $row['title'] . '">
+						<a href="product.php?ID=' . $row["ID"] . '" class="img-prod"><img class="img-fluid" src=" data:image/jpeg;base64,' . base64_encode($row["image"]) . '" alt="' . $row['title'] . '">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3">
@@ -666,8 +664,6 @@ require 'connection/connect.php';
 
 
 
-	<!-- loader -->
-	<!-- TODO: mozda promijenit loader -->
 	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
 			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
 			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
@@ -831,7 +827,7 @@ require 'connection/connect.php';
 					if (data.indexOf('saved') > -1) {
 						toastr.success('Item added to favorite.')
 					} else {
-						toastr.error('There is a problem with the server. Please try again later')
+						toastr.error('The item is already saved.')
 					}
 				},
 				error: function(data, err) {
