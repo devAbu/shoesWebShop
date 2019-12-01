@@ -68,6 +68,10 @@ $productID = $_REQUEST["ID"];
 		</div>
 	</div> -->
 
+	<?php
+	echo '<input type="number" value="' . $productID . '"  id="productID" hidden>';
+	?>
+
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
 
@@ -357,28 +361,28 @@ $productID = $_REQUEST["ID"];
 										<?php
 										/* TODO: ovdje id kad budem radio za poseban item */
 
-										$sql = "SELECT * FROM productsreview";
+										$sql = "SELECT * FROM productsreview inner join registracija on productsreview.user = registracija.email";
 										$result = $dbc->query($sql);
-
+										/* <div class="user-img" style="background-image: url(images/person_1.jpg)"></div> */
 										$count = $result->num_rows;
 										if ($count > 0) {
 											while ($row = $result->fetch_assoc()) {
-												echo '/* TODO: skontat nesto umjesto slike */<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-										<div class="desc">
+												echo '
+										<div class="desc mt-2">
 											<h4>
-											/* TODO: ovdje treba join za tabelom registracija i da se izbaci fullName kolona */
-												<span class="text-left">' . $row["user"] . '</span>
+												<span class="text-left">' . $row["fullName"] . '</span>
 											</h4>
-											<p>' . $row["review"] . '</p>';
-												if (isset($_SESSION['email'])) {
-													$session = $_SESSION['email'];
+											<p>' . $row["review"] . '</p>
+											</div> ';
+											}
+											if (isset($_SESSION['email'])) {
+												$session = $_SESSION['email'];
 
-													echo '<div class="col-12">
-												<textarea rows ="4" placeholder="Enter your opinion..." style="resize: none; width: 95%" class="form-control"></textarea>
-												<button class="btn btn-lg btn-primary mt-2" style=" display:block; margin: auto">Leave the review</button>
-											</div>
-										</div> ';
-												}
+												echo '<div class="col-12">
+												<textarea id="reviewText" rows ="4" placeholder="Enter your opinion..." style="resize: none; width: 95%" class="form-control"></textarea>
+												<button class="btn btn-lg btn-primary mt-2" style=" display:block; margin: auto" id="leaveReview">Leave the review</button>
+												</div>
+											';
 											}
 										}
 										?>
@@ -678,6 +682,31 @@ $productID = $_REQUEST["ID"];
 				}
 			})
 		}
+
+
+		$('#leaveReview').click(function() {
+			var reviewText = $('#reviewText').val()
+			var productID = $('#productID').val()
+			var user = $('#session').val()
+
+			if (reviewText == "") {
+				toastr.error('Please enter your opinion.')
+			} else {
+				$.ajax({
+					url: "dbSend/sendReview.php?task=send&productID=" + productID + "&user=" + user + "&review=" + reviewText,
+					success: function(data) {
+						if (data.indexOf('send') > -1) {
+							toastr.success('Thank you.')
+						} else {
+							toastr.error('There is a problem with the server. Please try again later')
+						}
+					},
+					error: function(data, err) {
+						toastr.error('Some problem occured. Please try later.')
+					}
+				})
+			}
+		})
 	</script>
 
 </body>
