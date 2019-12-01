@@ -1,5 +1,7 @@
+<!-- TODO: zavisi koji je artikal klikno taj mu se otvori -->
 <?php
 session_start();
+require 'connection/connect.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +38,9 @@ session_start();
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
+
+	<!-- TOASTR -->
+	<link href="toastr.css" rel="stylesheet" />
 </head>
 
 <body class="goto-here">
@@ -73,7 +78,7 @@ session_start();
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
+					<li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
 					<li class="nav-item"><a href="shop.php" class="nav-link">Shop</a></li>
 					<!-- <li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
@@ -87,13 +92,38 @@ session_start();
 					<!-- <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 			  <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
-					<li class="nav-item cta cta-colored"><a href="favorite.php" class="nav-link"><span class="ion-ios-heart"></span>[0]</a></li>
+					<!-- TODO: da se broj izmedju [] promijeni na osnovu broja artikala u favorite -->
+					<li class="nav-item cta cta-colored"><a href="favorite.php" class="nav-link" id="favoriteNumber"><span class="ion-ios-heart"></span>
+							<?php
+
+							if (isset($_SESSION['email'])) {
+								$session = $_SESSION['email'];
+
+								/* require 'connection/connect.php'; */
+
+								$sql = "SELECT * FROM  favoriteproduct where user = '$session' ";
+
+								$result = $dbc->query($sql);
+
+								$count = $result->num_rows;
+
+								if ($count > 0) {
+									echo '[' . $count . ']';
+								} else {
+									echo '[0]';
+								}
+							} else {
+								echo '[0]';
+							}
+
+							?>
+						</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
 					<?php
 					if (isset($_SESSION['email'])) {
 						$session = $_SESSION['email'];
-						echo "<li class='nav-item'><a href='logout.php'  class='nav-link link'><span class='navLinks'><i class='fas fa-sign-in-alt mr-2'></i>Logout</span></a></li><input type='text'  value='$session' hidden id='session' name='session'>";
+						echo "<li class='nav-item'><a href='logout.php'  class='nav-link link'><span class='navLinks'><i class='fas fa-sign-in-alt mr-2'></i>Logout</span></a></li><input type='text'  value='$session' hidden id='session' name='session'  onload='sessionCheck(id)'>";
 					} else {
 						echo '<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;">Sign
 							in</a></li>
@@ -290,6 +320,7 @@ session_start();
 					</div>-->
 
 					<p>
+						<!-- TODO: kad bude iz baze napravit saveFavorite -->
 						<a href="favorite.php" class="btn btn-black py-3 px-5 mr-2">Save <i class="ion-ios-heart ml-1"></i></a>
 
 						<a target="_blank" href="https://www.amazon.com/gp/offer-listing/B07198WDN5/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07198WDN5&linkCode=am2&tag=shoeshion1-20&linkId=5f01c89633427bff495dbc74cb539344" class="btn btn-primary py-3 px-5">Buy now<i class="ion-ios-cart ml-1"></i></a>
@@ -340,14 +371,59 @@ session_start();
 						</div>
 						<div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab">
 							<div class="row p-4">
-								<div class="col-md-7">
-									<h3 class="mb-4">23 Reviews</h3>
+								<div class="col-md-12">
+									<h3 class="mb-4">
+										<?php
+										$sql = "SELECT * FROM  productsreview";
+
+										$result = $dbc->query($sql);
+
+										$count = $result->num_rows;
+
+										if ($count > 0) {
+											echo $count . 'reviews';
+										} else {
+											echo '0 reviews';
+										}
+										?>
+									</h3>
 									<div class="review">
-										<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+										<?php
+										/* TODO: ovdje id kad budem radio za poseban item */
+
+										$sql = "SELECT * FROM productsreview";
+										$result = $dbc->query($sql);
+
+										$count = $result->num_rows;
+										if ($count > 0) {
+											while ($row = $result->fetch_assoc()) {
+												echo '/* TODO: skontat nesto umjesto slike */<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+										<div class="desc">
+											<h4>
+											/* TODO: ovdje treba join za tabelom registracija i da se izbaci fullName kolona */
+												<span class="text-left">' . $row["user"] . '</span>
+											</h4>
+											<p>' . $row["review"] . '</p>';
+												if (isset($_SESSION['email'])) {
+													$session = $_SESSION['email'];
+
+													echo '<div class="col-12">
+												<textarea rows ="4" placeholder="Enter your opinion..." style="resize: none; width: 95%" class="form-control"></textarea>
+												<button class="btn btn-lg btn-primary mt-2" style=" display:block; margin: auto">Leave the review</button>
+											</div>
+										</div> ';
+												}
+											}
+										}
+
+
+										?>
+										<!-- <div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
 										<div class="desc">
 											<h4>
 												<span class="text-left">Jacob Webb</span>
-												<span class="text-right">14 March 2018</span>
+											</h4>
+											<!- <span class="text-right">14 March 2018</span>
 											</h4>
 											<p class="star">
 												<span>
@@ -358,55 +434,14 @@ session_start();
 													<i class="ion-ios-star-outline"></i>
 												</span>
 												<span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-											</p>
+											</p> ->
 											<p>When she reached the first hills of the Italic Mountains, she had a last
 												view back on the skyline of her hometown Bookmarksgrov</p>
-										</div>
+										</div> -->
 									</div>
-									<div class="review">
-										<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
-										<div class="desc">
-											<h4>
-												<span class="text-left">Jacob Webb</span>
-												<span class="text-right">14 March 2018</span>
-											</h4>
-											<p class="star">
-												<span>
-													<i class="ion-ios-star-outline"></i>
-													<i class="ion-ios-star-outline"></i>
-													<i class="ion-ios-star-outline"></i>
-													<i class="ion-ios-star-outline"></i>
-													<i class="ion-ios-star-outline"></i>
-												</span>
-												<span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-											</p>
-											<p>When she reached the first hills of the Italic Mountains, she had a last
-												view back on the skyline of her hometown Bookmarksgrov</p>
-										</div>
-									</div>
-									<div class="review">
-										<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
-										<div class="desc">
-											<h4>
-												<span class="text-left">Jacob Webb</span>
-												<span class="text-right">14 March 2018</span>
-											</h4>
-											<p class="star">
-												<span>
-													<i class="ion-ios-star-outline"></i>
-													<i class="ion-ios-star-outline"></i>
-													<i class="ion-ios-star-outline"></i>
-													<i class="ion-ios-star-outline"></i>
-													<i class="ion-ios-star-outline"></i>
-												</span>
-												<span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-											</p>
-											<p>When she reached the first hills of the Italic Mountains, she had a last
-												view back on the skyline of her hometown Bookmarksgrov</p>
-										</div>
-									</div>
+
 								</div>
-								<div class="col-md-4">
+								<!-- <div class="col-md-4">
 									<div class="rating-wrap">
 										<h3 class="mb-4">Give a Review</h3>
 										<p class="star">
@@ -465,7 +500,7 @@ session_start();
 											<span>0 Reviews</span>
 										</p>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
@@ -576,6 +611,9 @@ session_start();
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false">
 	</script>
 	<script src="js/google-map.js"></script>
+
+	<!-- TOASTR -->
+	<script src="toastr.js"></script>
 	<script src="js/main.js"></script>
 
 	<script>
@@ -730,6 +768,33 @@ session_start();
 				}
 			})
 		})
+
+
+
+		if (typeof $('#session').val() == "undefined") {
+			$('[id^="save"]').css('pointer-events', 'none')
+			$('[id^="save"]').css('opacity', 0.5)
+
+			$('#favoriteNumber').css('pointer-events', 'none')
+		}
+
+		function saveFavorite(id) {
+			var idRes = id.replace(/\D/g, "")
+			var user = $('#session').val()
+			$.ajax({
+				url: "dbSend/saveFavorite.php?task=save&productID=" + idRes + "&user=" + user,
+				success: function(data) {
+					if (data.indexOf('saved') > -1) {
+						toastr.success('Item added to favorite.')
+					} else {
+						toastr.error('There is a problem with the server. Please try again later')
+					}
+				},
+				error: function(data, err) {
+					toastr.error('Some problem occured. Please try later.')
+				}
+			})
+		}
 	</script>
 
 </body>

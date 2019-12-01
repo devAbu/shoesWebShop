@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'connection/connect.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,8 +75,8 @@ session_start();
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
-					<li class="nav-item active"><a href="shop.php" class="nav-link">Shop</a></li>
+					<li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="shop.php" class="nav-link">Shop</a></li>
 					<!-- <li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown04">
@@ -88,13 +89,38 @@ session_start();
 					<!-- <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 			  <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
-					<li class="nav-item cta cta-colored"><a href="favorite.php" class="nav-link"><span class="ion-ios-heart"></span>[0]</a></li>
+					<!-- TODO: da se broj izmedju [] promijeni na osnovu broja artikala u favorite -->
+					<li class="nav-item cta cta-colored"><a href="favorite.php" class="nav-link" id="favoriteNumber"><span class="ion-ios-heart"></span>
+							<?php
+
+							if (isset($_SESSION['email'])) {
+								$session = $_SESSION['email'];
+
+								/* require 'connection/connect.php'; */
+
+								$sql = "SELECT * FROM  favoriteproduct where user = '$session' ";
+
+								$result = $dbc->query($sql);
+
+								$count = $result->num_rows;
+
+								if ($count > 0) {
+									echo '[' . $count . ']';
+								} else {
+									echo '[0]';
+								}
+							} else {
+								echo '[0]';
+							}
+
+							?>
+						</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
 					<?php
 					if (isset($_SESSION['email'])) {
 						$session = $_SESSION['email'];
-						echo "<li class='nav-item'><a href='logout.php'  class='nav-link link'><span class='navLinks'><i class='fas fa-sign-in-alt mr-2'></i>Logout</span></a></li><input type='text'  value='$session' hidden id='session' name='session'>";
+						echo "<li class='nav-item'><a href='logout.php'  class='nav-link link'><span class='navLinks'><i class='fas fa-sign-in-alt mr-2'></i>Logout</span></a></li><input type='text'  value='$session' hidden id='session' name='session'  onload='sessionCheck(id)'>";
 					} else {
 						echo '<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;">Sign
 							in</a></li>
@@ -227,8 +253,6 @@ session_start();
 					<div class="row">
 						<?php
 
-						require 'connection/connect.php';
-
 						$sql = "SELECT * FROM products";
 						$result = $dbc->query($sql);
 
@@ -240,7 +264,7 @@ session_start();
 								echo '<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
 					<div class="product d-flex flex-column">
 						<a href="#" class="img-prod"><img class="img-fluid" src=" data:image/jpeg;base64,' . base64_encode($row["image"]) . '" alt="' . $row['title'] . '">
-							<div class="overlay"></div>
+							<div class="overlay" style="width:200px; height: 200px"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3">
 							<div class="d-flex">
@@ -262,7 +286,7 @@ session_start();
 								<p class="price"><span>$' . $row['price'] . '</span></p>
 							</div>
 							<p class="bottom-area d-flex px-3">
-								<a href="#" class="add-to-cart text-center py-2 mr-1"><span>SAVE<i class="ion-ios-heart ml-1"></i></span></a>
+								<a href="javascript:void(0)" class="add-to-cart text-center py-2 mr-1 " id="saveFavorite' . $row["ID"] . '" onclick="saveFavorite(this.id)"><span>SAVE<i class="ion-ios-heart ml-1"></i></span></a>
 								<a target="_blank" class="buy-now text-center py-2" href="' . $row['amazonLink'] . '"><span>Buy now<i class="ion-ios-cart ml-1"></i></span></a>
 							</p>
 						</div>
@@ -737,6 +761,33 @@ session_start();
 				}
 			})
 		})
+
+
+
+		if (typeof $('#session').val() == "undefined") {
+			$('[id^="save"]').css('pointer-events', 'none')
+			$('[id^="save"]').css('opacity', 0.5)
+
+			$('#favoriteNumber').css('pointer-events', 'none')
+		}
+
+		function saveFavorite(id) {
+			var idRes = id.replace(/\D/g, "")
+			var user = $('#session').val()
+			$.ajax({
+				url: "dbSend/saveFavorite.php?task=save&productID=" + idRes + "&user=" + user,
+				success: function(data) {
+					if (data.indexOf('saved') > -1) {
+						toastr.success('Item added to favorite.')
+					} else {
+						toastr.error('There is a problem with the server. Please try again later')
+					}
+				},
+				error: function(data, err) {
+					toastr.error('Some problem occured. Please try later.')
+				}
+			})
+		}
 	</script>
 
 </body>
