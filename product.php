@@ -12,8 +12,7 @@ $productID = $_REQUEST["ID"];
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="ABOC">
 	<meta name="keywords" content="online shop, shoes, amazon, best e-commerce">
-	<!-- TODO: treba skontat opis -->
-	<meta name="description" content="treba napisat opis">
+	<meta name="description" content="The widest online shoes' shop at the best prices. Buy from the safest and most ranked sellers in the world.">
 	<link rel="shortcut icon" href="images/logoIcon.ico" type="image/x-icon">
 
 	<link rel="shortcut icon" href="images/logoIcon.ico" type="image/x-icon">
@@ -82,8 +81,8 @@ $productID = $_REQUEST["ID"];
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav">
-					<li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
-					<li class="nav-item"><a href="shop.php" class="nav-link">Shop</a></li>
+					<li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
+					<li class="nav-item active"><a href="shop.php" class="nav-link">Shop</a></li>
 					<!-- <li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown04">
@@ -166,8 +165,7 @@ $productID = $_REQUEST["ID"];
 						</div>
 						<div class="row">
 							<div class="col-7 col-sm-7 col-md-7 col-lg-7">
-								<a class="badge ml-3 text-primary" style="text-decoration:none; cursor: pointer;" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">
-									<!-- TODO: na hover druga boja -->
+								<a class="ml-3 text-primary modalLink" style="text-decoration:none; cursor: pointer;" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">
 									<span style="font-size:13px;">No account?</span>
 								</a>
 							</div>
@@ -220,8 +218,7 @@ $productID = $_REQUEST["ID"];
 							</div>
 						</div>
 						<div class="col-12 mb-3" style="margin-left:-10px !important;">
-							<!-- TODO: na hover treba druga boja -->
-							<a class="text-primary" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;" data-dismiss="modal">Already has
+							<a class="text-primary modalLink" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;" data-dismiss="modal">Already has
 								account?</a>
 						</div>
 						<div class="col-xs-12  offset-4">
@@ -239,13 +236,12 @@ $productID = $_REQUEST["ID"];
 		</div>
 	</div>
 
-	<!-- TODO: isto ko tamo...mozda jumbotron -->
-	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
+	<div class="hero-wrap hero-bread" style="background-image: url('images/product_bg.jpg');">
 		<div class="container">
 			<div class="row no-gutters slider-text align-items-center justify-content-center">
 				<div class="col-md-9 ftco-animate text-center">
-					<p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home</a></span> <span>Shop</span></p>
-					<h1 class="mb-0 bread">Shop</h1>
+					<!-- <p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home</a></span> <span>Shop</span></p> -->
+					<h1 class="mb-0 bread">PRODUCT'S DETAILS</h1>
 				</div>
 			</div>
 		</div>
@@ -408,14 +404,13 @@ $productID = $_REQUEST["ID"];
 			<div class="row">
 				<div class="col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">IME STRANICE</h2>
-						<!-- TODO: ovdje kratki opis -->
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-						<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+						<h2 class="ftco-heading-2">SHOESHION</h2>
+						<p>The widest online shoes' shop at the best prices. Buy from the safest and most ranked sellers in the world.</p>
+						<ul class="ftco-footer-social list-unstyled float-md-left float-lft">
 							<!-- <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li> -->
-							<!-- TODO: fb i inst profili kad se naprave-->
+							<!-- TODO: fb profili kad se naprave-->
 							<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+							<li class="ftco-animate"><a href="https://www.instagram.com/_shoeshion_/"><span class="icon-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>

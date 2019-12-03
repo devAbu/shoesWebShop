@@ -11513,7 +11513,7 @@ button.bg-dark:focus {
 
 a.text-primary:hover,
 a.text-primary:focus {
-  color: #0056b3 !important;
+  color: #0254ac !important;
 }
 
 .text-secondary {
@@ -12134,7 +12134,7 @@ h5,
 
 .hero-wrap .slider-text .bread {
   font-weight: 800;
-  color: #000000;
+  color: #ffffff;
   font-size: 30px;
   font-family: "Open Sans", Arial, sans-serif;
   letter-spacing: 3px;
@@ -12156,7 +12156,7 @@ h5,
 }
 
 .hero-wrap.hero-bread {
-  padding: 12em 0;
+  padding: 15em 0;
 }
 
 .mouse {
@@ -13250,6 +13250,10 @@ a.buy-now:hover {
   -ms-border-radius: 50%;
   border-radius: 50%;
   float: left;
+}
+
+.text-primary.modalLink:hover {
+  color: black !important
 }
 
 .review .desc {

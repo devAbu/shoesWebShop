@@ -11,8 +11,7 @@ require 'connection/connect.php';
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="ABOC">
 	<meta name="keywords" content="online shop, shoes, amazon, best e-commerce">
-	<!-- TODO: treba skontat opis -->
-	<meta name="description" content="treba napisat opis">
+	<meta name="description" content="The widest online shoes' shop at the best prices. Buy from the safest and most ranked sellers in the world.">
 	<link rel="shortcut icon" href="images/logoIcon.ico" type="image/x-icon">
 
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
@@ -75,7 +74,7 @@ require 'connection/connect.php';
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav">
-					<li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
 					<li class="nav-item"><a href="shop.php" class="nav-link">Shop</a></li>
 					<!-- <li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
@@ -89,8 +88,7 @@ require 'connection/connect.php';
 					<!-- <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 			  <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
-					<!-- TODO: da se broj izmedju [] promijeni na osnovu broja artikala u favorite -->
-					<li class="nav-item cta cta-colored"><a href="favorite.php" class="nav-link" id="favoriteNumber"><span class="ion-ios-heart"></span>
+					<li class="nav-item cta cta-colored active"><a href="favorite.php" class="nav-link" id="favoriteNumber"><span class="ion-ios-heart"></span>
 							<?php
 
 							if (isset($_SESSION['email'])) {
@@ -160,8 +158,7 @@ require 'connection/connect.php';
 						</div>
 						<div class="row">
 							<div class="col-7 col-sm-7 col-md-7 col-lg-7">
-								<a class="badge ml-3 text-primary" style="text-decoration:none; cursor: pointer;" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">
-									<!-- TODO: na hover druga boja -->
+								<a class="ml-3 text-primary modalLink" style="text-decoration:none; cursor: pointer;" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">
 									<span style="font-size:13px;">No account?</span>
 								</a>
 							</div>
@@ -214,8 +211,7 @@ require 'connection/connect.php';
 							</div>
 						</div>
 						<div class="col-12 mb-3" style="margin-left:-10px !important;">
-							<!-- TODO: na hover treba druga boja -->
-							<a class="text-primary" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;" data-dismiss="modal">Already has
+							<a class="text-primary modalLink" data-toggle="modal" data-target="#loginModal" style="cursor: pointer;" data-dismiss="modal">Already has
 								account?</a>
 						</div>
 						<div class="col-xs-12  offset-4">
@@ -233,13 +229,12 @@ require 'connection/connect.php';
 		</div>
 	</div>
 
-	<!-- TODO: mozda jumbotron al ne cijeli ekran-->
-	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
+	<div class="hero-wrap hero-bread" style="background-image: url('images/favorite_bg.jpg'); filter:sepia(20%); brightness(200%)">
 		<div class="container">
 			<div class="row no-gutters slider-text align-items-center justify-content-center">
 				<div class="col-md-9 ftco-animate text-center">
-					<p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home</a></span> <span>Cart</span></p>
-					<h1 class="mb-0 bread">My Wishlist</h1>
+					<!-- <span class="breadcrumbs"><span class="mr-2"><a href="index.php">Home</a></span> <span>Favorite</span></p> -->
+					<h1 class="mb-0 bread">Wishlist</h1>
 				</div>
 			</div>
 		</div>
@@ -352,14 +347,13 @@ require 'connection/connect.php';
 			<div class="row">
 				<div class="col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">IME STRANICE</h2>
-						<!-- TODO: ovdje kratki opis -->
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-						<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+						<h2 class="ftco-heading-2">SHOESHION</h2>
+						<p>The widest online shoes' shop at the best prices. Buy from the safest and most ranked sellers in the world.</p>
+						<ul class="ftco-footer-social list-unstyled float-md-left float-lft">
 							<!-- <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li> -->
-							<!-- TODO: fb i inst profili kad se naprave-->
+							<!-- TODO: fb profil kad se naprave-->
 							<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+							<li class="ftco-animate"><a href="https://www.instagram.com/_shoeshion_/"><span class="icon-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>
