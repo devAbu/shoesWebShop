@@ -2,6 +2,14 @@
 <?php
 session_start();
 require 'connection/connect.php';
+
+if (isset($_REQUEST['priceFrom'])) {
+	$priceFrom = $_REQUEST['priceFrom'];
+}
+
+if (isset($_REQUEST['priceTo'])) {
+	$priceTo = $_REQUEST['priceTo'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -250,6 +258,15 @@ require 'connection/connect.php';
 						<?php
 
 						$sql = "SELECT * FROM products";
+
+						if (!empty($priceFrom) && !empty($priceTo)) {
+							$sql .= " where price >= $priceFrom AND price <= $priceTo";
+						} else if (!empty($priceFrom)) {
+							$sql .= " where price >= $priceFrom";
+						} else if (!empty($priceTo)) {
+							$sql .= " where price <= $priceTo";
+						}
+
 						$result = $dbc->query($sql);
 
 						$count = $result->num_rows;
@@ -317,10 +334,10 @@ require 'connection/connect.php';
 				<div class="col-md-4 col-lg-2">
 					<div class="sidebar">
 						<div class="sidebar-box-2">
-							<h2 class="heading">Categories</h2>
+							<!-- <h2 class="heading">Categories</h2> -->
 							<div class="fancy-collapse-panel">
 								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-									<div class="panel panel-default">
+									<!-- <div class="panel panel-default">
 										<div class="panel-heading" role="tab" id="headingOne">
 											<h4 class="panel-title">
 												<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Men's Shoes
@@ -329,7 +346,7 @@ require 'connection/connect.php';
 										</div>
 										<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 											<div class="panel-body">
-												<!-- TODO: mozda bez ovih il vidjet koji nam trebaju-->
+												
 												<ul>
 													<li><a href="#">Sport</a></li>
 													<li><a href="#">Casual</a></li>
@@ -341,8 +358,8 @@ require 'connection/connect.php';
 												</ul>
 											</div>
 										</div>
-									</div>
-									<div class="panel panel-default">
+									</div> -->
+									<!-- <div class="panel panel-default">
 										<div class="panel-heading" role="tab" id="headingTwo">
 											<h4 class="panel-title">
 												<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Women's Shoes
@@ -351,7 +368,6 @@ require 'connection/connect.php';
 										</div>
 										<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 											<div class="panel-body">
-												<!-- TODO: mozda bez ovih il vidjet koji nam trebaju-->
 												<ul>
 													<li><a href="#">Sport</a></li>
 													<li><a href="#">Casual</a></li>
@@ -363,7 +379,7 @@ require 'connection/connect.php';
 												</ul>
 											</div>
 										</div>
-									</div>
+									</div> -->
 									<!-- <div class="panel panel-default">
 										<div class="panel-heading" role="tab" id="headingThree">
 											<h4 class="panel-title">
@@ -411,15 +427,17 @@ require 'connection/connect.php';
 						</div>
 						<div class="sidebar-box-2">
 							<h2 class="heading">Price</h2>
-							<form method="post" class="colorlib-form-2">
+							<form class="colorlib-form-2">
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
-											<!-- TODO: stavit kao range pravi...da se moze povlacit sa obje strane-->
 											<label for="guests">From:</label>
 											<div class="form-field">
 												<!-- <i class="icon icon-arrow-down3"></i> -->
-												<input type="number" id="priceFrom" name="priceFrom" class="form-control" min="0" step="10" style="padding-right: 5%" placeholder="0">
+												<input type="number" id="priceFrom" name="priceFrom" class="form-control" min="0" step="10" style="padding-right: 5%" placeholder="0" value="<?php 
+												if (isset($_REQUEST['priceFrom'])) {
+												echo $priceFrom;
+												}?>">
 											</div>
 										</div>
 									</div>
@@ -428,9 +446,12 @@ require 'connection/connect.php';
 											<label for="guests">To:</label>
 											<div class="form-field">
 												<!-- <i class="icon icon-arrow-down3"></i> -->
-												<input type="number" id="priceTo" name="priceTo" class="form-control" min="0" step="10" style="padding-right: 5%" placeholder="100">
+												<input type="number" id="priceTo" name="priceTo" class="form-control" min="0" step="10" style="padding-right: 5%" placeholder="100" value="<?php 
+												if (isset($_REQUEST['priceTo'])) {
+												echo $priceTo;
+												}?>">
 											</div>
-											<!-- TODO: dodat button za search -->
+											<button class="btn btn-lg btn-primary mt-3" id="search" style="width: 100%">Search</button>
 										</div>
 									</div>
 								</div>
@@ -613,7 +634,7 @@ require 'connection/connect.php';
 
 	<script>
 		toastr.options.closeButton = true;
-
+		toastr.options.preventDuplicates = true;
 
 		$('#priceFrom, #priceTo').on('keydown', function(e) {
 			console.log()
@@ -636,11 +657,19 @@ require 'connection/connect.php';
 			}
 
 			if (priceFrom.length != 0 && priceTo.length != 0) {
+				console.log(priceFrom)
 				console.log(priceTo)
 				if (priceTo == 0) {
 					toastr.error('Please enter a valid max price')
+					$('#search').attr('disabled', true);
+					$('#search').css('cursor', 'not-allowed')
 				} else if (parseInt(priceFrom) >= parseInt(priceTo)) {
 					toastr.error('Please enter a valid price range')
+					$('#search').attr('disabled', true);
+					$('#search').css('cursor', 'not-allowed')
+				} else {
+					$('#search').attr('disabled', false);
+					$('#search').css('cursor', 'pointer')
 				}
 			}
 		})
@@ -662,8 +691,10 @@ require 'connection/connect.php';
 				}
 			});
 
-			toastr.options.closeButton = true;
-			toastr.options.preventDuplicates = true;
+			$('#search').attr('disabled', true);
+			$('#search').css('cursor', 'not-allowed')
+
+
 
 			$('#logButton').click(function() {
 				var emailLog = $('#emailLog').val();
@@ -783,6 +814,20 @@ require 'connection/connect.php';
 				}
 			})
 		}
+
+
+		/* $('#search').click(function() {
+			var priceFrom = $('#priceFrom').val()
+			var priceTo = $('#priceTo').val()
+
+			if (priceFrom != "" && priceTo != "") {
+				window.location.replace("shop.php?priceFrom=" + priceFrom + "&priceTo=" + priceTo);
+			} else if (priceFrom != "") {
+				window.location.replace("shop.php?priceFrom=" + priceFrom);
+			} else if (priceTo != "") {
+				window.location.replace("shop.php?priceTo=" + priceTo);
+			}
+		}) */
 	</script>
 
 </body>

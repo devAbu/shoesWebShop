@@ -340,7 +340,8 @@ $productID = $_REQUEST["ID"];
 								<div class="col-md-12">
 									<h3 class="mb-4">
 										<?php
-										$sql = "SELECT * FROM  productsreview";
+										$ID = $_REQUEST['ID'];
+										$sql = "SELECT * FROM  productsreview where productID = $ID";
 
 										$result = $dbc->query($sql);
 
@@ -355,9 +356,10 @@ $productID = $_REQUEST["ID"];
 									</h3>
 									<div class="review">
 										<?php
-										/* TODO: ovdje id kad budem radio za poseban item */
 
-										$sql = "SELECT * FROM productsreview inner join registracija on productsreview.user = registracija.email";
+										$ID = $_REQUEST['ID'];
+
+										$sql = "SELECT * FROM productsreview inner join registracija on productsreview.user = registracija.email inner join products on productsreview.productID = products.ID where products.ID = $ID";
 										$result = $dbc->query($sql);
 										/* <div class="user-img" style="background-image: url(images/person_1.jpg)"></div> */
 										$count = $result->num_rows;
@@ -371,16 +373,17 @@ $productID = $_REQUEST["ID"];
 											<p>' . $row["review"] . '</p>
 											</div> ';
 											}
-											if (isset($_SESSION['email'])) {
-												$session = $_SESSION['email'];
+										}
+										if (isset($_SESSION['email'])) {
+											$session = $_SESSION['email'];
 
-												echo '<div class="col-12">
+											echo '<div class="col-12">
 												<textarea id="reviewText" rows ="4" placeholder="Enter your opinion..." style="resize: none; width: 95%" class="form-control"></textarea>
 												<button class="btn btn-lg btn-primary mt-2" style=" display:block; margin: auto" id="leaveReview">Leave the review</button>
 												</div>
 											';
-											}
 										}
+
 										?>
 									</div>
 								</div>
